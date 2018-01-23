@@ -11,7 +11,7 @@
             <generator class="assigned" />
         </id>
         <property name="uid" type="java.lang.String">
-            <column name="uid" length="100" not-null="true" />
+            <column name="uid" length="225" not-null="true" unique="true" />
         </property>
         <property name="name" type="java.lang.String">
             <column name="name" not-null="true" />
@@ -52,5 +52,11 @@
         <property name="discounts" type="java.lang.String">
             <column name="discounts" not-null="true" />
         </property>
+        <set name="classeses" inverse="true">
+            <key>
+                <column name="uid" not-null="true" />
+            </key>
+            <one-to-many class="com.store.entity.Classes" />
+        </set>
     </class>
 </hibernate-mapping>

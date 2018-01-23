@@ -18,9 +18,10 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
-import com.meituan.test.GetJson;
+import com.meituan.util.GetJson;
 import com.opensymphony.xwork2.ActionSupport;
 import com.store.dao.StoreDao;
+import com.store.entity.Store;
 import com.store.lmp.StoreImp;
 
 
@@ -40,7 +41,7 @@ public class StoreAction extends ActionSupport{
 		String location=longitude+","+latitude;
 	      try
 	      {
-	         URL url = new URL("http://api.map.baidu.com/geosearch/v3/nearby?ak=U2ELGNcAWBzW5zCf3cUFAsQvfAlWeSIE&geotable_id=130836&location="+location+"&radius=100000&sortby=distance:1");
+	         URL url = new URL("http://api.map.baidu.com/geosearch/v3/nearby?ak=U2ELGNcAWBzW5zCf3cUFAsQvfAlWeSIE&geotable_id=130836&location="+location+"&radius=1000000&sortby=distance:1");
 	         URLConnection urlConnection = url.openConnection();
 	         HttpURLConnection connection = null;
 	         if(urlConnection instanceof HttpURLConnection)
@@ -59,7 +60,6 @@ public class StoreAction extends ActionSupport{
              {
                 urlString += current;
              }
-             System.out.println(urlString);
              JSONObject json = JSONObject.fromObject(urlString);
              if(json.get("status").equals(0)){
             	 JSONArray contents = json.getJSONArray("contents");
@@ -79,6 +79,20 @@ public class StoreAction extends ActionSupport{
 	      {
 	         e.printStackTrace();
 	      }
+		
+	}
+	
+	public void getStoreinfo() throws IOException{
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response= ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String uid =request.getParameter("uid");
+		Store store=new Store();
+		store.setUid(uid);
+		StoreDao storedao=new StoreImp();
+		ArrayList classstore = storedao.Storeinfo(store);
+		out.print(classstore);
 		
 	}
 }

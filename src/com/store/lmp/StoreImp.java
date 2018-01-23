@@ -1,6 +1,8 @@
 package com.store.lmp;
 
+import java.io.Console;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,8 +11,10 @@ import org.hibernate.Transaction;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import com.meituan.util.GetJson;
 import com.meituan.util.HibernateSessionFactory;
 import com.store.dao.StoreDao;
+import com.store.entity.Classes;
 import com.store.entity.Store;
 
 public class StoreImp implements StoreDao{
@@ -50,6 +54,36 @@ public class StoreImp implements StoreDao{
 				
 		}
 		return storelist;
+	}
+
+	public ArrayList Storeinfo(Store store) {
+		Session session = HibernateSessionFactory.getSession();
+		Transaction tx = session.beginTransaction();
+		ArrayList classlist=new ArrayList();
+		Classes classes=new Classes();
+		classes.setStore(store);
+		try {
+			 List<Classes> classeslist= session.createQuery("from Classes where uid = "+store).list();
+//			 System.out.println(classeslist+"---------");
+//			 System.out.println(classeslist.size()+"-----------");
+//			 for (int i = 0; i < classeslist.size(); i++) {
+//				JSONObject jsonobject=new JSONObject();
+//				System.out.println(classeslist.get(i).getId());
+//				jsonobject.put("uid",classeslist.get(i).getId());
+//				jsonobject.put("name",classeslist.get(i).getName());
+//				
+//			}
+		} catch (Exception e) {
+			if(tx!=null){
+				tx.rollback();
+			}
+		}finally{
+			if(session!=null){
+				session.close();
+			}
+		}
+
+		return classlist;
 	}
 
 }

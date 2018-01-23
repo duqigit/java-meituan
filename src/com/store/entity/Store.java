@@ -1,5 +1,8 @@
 package com.store.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Store entity. @author MyEclipse Persistence Tools
  */
@@ -23,6 +26,7 @@ public class Store implements java.io.Serializable {
 	private String distributionfee;
 	private String firstorder;
 	private String discounts;
+	private Set classeses = new HashSet(0);
 
 	// Constructors
 
@@ -30,7 +34,7 @@ public class Store implements java.io.Serializable {
 	public Store() {
 	}
 
-	/** full constructor */
+	/** minimal constructor */
 	public Store(Integer id, String uid, String name, String img,
 			String longitude, String latitude, String send, String isvip,
 			String isbrand, String discount, String average, String time,
@@ -50,6 +54,30 @@ public class Store implements java.io.Serializable {
 		this.distributionfee = distributionfee;
 		this.firstorder = firstorder;
 		this.discounts = discounts;
+	}
+
+	/** full constructor */
+	public Store(Integer id, String uid, String name, String img,
+			String longitude, String latitude, String send, String isvip,
+			String isbrand, String discount, String average, String time,
+			String distributionfee, String firstorder, String discounts,
+			Set classeses) {
+		this.id = id;
+		this.uid = uid;
+		this.name = name;
+		this.img = img;
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.send = send;
+		this.isvip = isvip;
+		this.isbrand = isbrand;
+		this.discount = discount;
+		this.average = average;
+		this.time = time;
+		this.distributionfee = distributionfee;
+		this.firstorder = firstorder;
+		this.discounts = discounts;
+		this.classeses = classeses;
 	}
 
 	// Property accessors
@@ -172,6 +200,14 @@ public class Store implements java.io.Serializable {
 
 	public void setDiscounts(String discounts) {
 		this.discounts = discounts;
+	}
+
+	public Set getClasseses() {
+		return this.classeses;
+	}
+
+	public void setClasseses(Set classeses) {
+		this.classeses = classeses;
 	}
 
 }
